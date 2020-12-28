@@ -1,0 +1,8 @@
+@import "./components/category";
+
+@media (max-width: 1200px) {
+	.categorypreview .movies__item:last-child {
+		display: none;
+		color: red;
+	}
+}

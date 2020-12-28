@@ -1,0 +1,58 @@
+.home .wrapper {
+	min-height: 0;
+}
+.wrapper {
+	position: relative;
+}
+.movies {
+	padding: 30px;
+	list-style: none;
+}
+
+.movies__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 30px;
+}
+
+.movies__list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.movies__nav {
+	padding: 25px 0;
+	text-align: center;
+}
+
+.morebutton {
+	display: inline-block;
+	border: 1px solid #081c24;
+	text-transform: uppercase;
+	background: #081c24;
+	font-weight: 300;
+	line-height: 2;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+	color: #081c24;
+	background: transparent;
+	outline: none;
+	transition: background 0.5s ease, color 0.5s ease;
+	font-size: 12px;
+	padding: 6px 20px 5px;
+}
+
+body:not(.touch) .morebutton:hover {
+	background: #081c24;
+	color: #fff;
+}
+
+@media (max-width: 1024px) {
+	.movies__list {
+		flex-wrap: wrap;
+	}
+}

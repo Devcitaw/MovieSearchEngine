@@ -1,0 +1,79 @@
+import React, { Component } from "react";
+import Movies from "./Movies";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+class LoadCategory extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			category: props.cat,
+			catname: props.catname,
+			peliculas: [],
+			paginaActual: props.paginaActual,
+		};
+	}
+
+	componentDidMount() {
+		const cargar = `${this.state.category}&page=${this.state.paginaActual}`;
+		console.log(cargar);
+		axios.get(`${cargar}`).then((res) => {
+			const titulos = res.data.results;
+			this.setState({
+				peliculas: titulos,
+			});
+		});
+	}
+
+	// componentDidUpdate() {
+	// 	const cargar = `${this.state.category}&page=${this.state.paginaActual}`;
+	// 	console.log(cargar);
+	// 	axios.get(`${cargar}`).then((res) => {
+	// 		const titulos = res.data.results;
+	// 		this.setState({
+	// 			peliculas: titulos,
+	// 		});
+	// 	});
+	// }
+
+	loadMore() {
+		const nuevaPaginaActual = `${this.state.paginaActual++}`;
+		const cargar = `${this.state.category}&page=${nuevaPaginaActual}`;
+		console.log(cargar);
+		axios.get(`${cargar}`).then((res) => {
+			const titulos = res.data.results;
+			if (titulos) {
+				titulos.forEach((titulo) => {
+					this.state.peliculas.push(titulo);
+				});
+				this.setState({
+					peliculas: this.state.peliculas,
+				});
+			}
+		});
+	}
+
+	//hacerle un propsWillUpdate o un componentWillUpdate
+
+	render() {
+		const { peliculas } = this.state;
+		return (
+			<ul className="movies__list">
+				{peliculas.map((u) => (
+					<li className="movies__item">
+						<Link to={`/movie/${u.id}`} className="movies-item__link">
+							<Movies pic={u.poster_path} title={u.original_title} />
+						</Link>
+					</li>
+				))}
+				<div class="movies__nav">
+					<button className="morebutton" onClick={() => this.loadMore()}>
+						Load more
+					</button>
+				</div>
+			</ul>
+		);
+	}
+}
+
+export default LoadCategory;
