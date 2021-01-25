@@ -6,33 +6,32 @@ import { Link } from "react-router-dom";
 const LoadCategory = ({ cat }) => {
 	const [pagina, setPagina] = useState(1);
 	const [peliculas, setPeliculas] = useState([]);
-    console.log("🚀 ~ file: LoadCategory.js ~ line 9 ~ LoadCategory ~ peliculas", peliculas)
-   	
-	const getMovies = (addNews =true) => {
+	console.log(
+		"🚀 ~ file: LoadCategory.js ~ line 9 ~ LoadCategory ~ peliculas",
+		peliculas
+	);
+
+	const getMovies = (addNews = true) => {
 		const cargar = `${cat}&page=${pagina}`;
 		axios
 			.get(`${cargar}`)
 			.then((res) => {
-				if(addNews){
-					setPeliculas([...peliculas,...res.data.results]);
-				}else{
+				if (addNews) {
+					setPeliculas([...peliculas, ...res.data.results]);
+				} else {
 					setPeliculas([...res.data.results]);
 				}
-			
 			})
 			.catch((err) => alert(`Error! ${err}`));
-	} 
-	useEffect(() => {
-		getMovies();
-	}, [pagina]);
+	};
 
 	useEffect(() => {
 		getMovies(false);
-	}, [cat]); 
-	
+	}, [cat]);
+
 	useEffect(() => {
 		getMovies();
-	}, []);
+	}, [pagina]);
 
 	const loadMore = () => {
 		setPagina(pagina + 1);
